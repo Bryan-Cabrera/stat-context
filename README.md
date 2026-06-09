@@ -1,16 +1,29 @@
-# React + Vite
+# StatContext
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A stats app for casual fans. Every stat explained in plain English with real context — not just numbers, but what those numbers actually mean.
 
-Currently, two official plugins are available:
+**Live app:** https://stat-context.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Why StatContext?
+ESPN and CBS Sports are built for die-hards who already know what ERA and OPS mean. StatContext shows the same stats but explains them in plain English and tells you where a player ranks — so a casual fan actually understands what they're looking at.
 
-## React Compiler
+## Tech Stack
+- React + Vite
+- Tailwind CSS
+- MLB Stats API (official, free, no key required)
+- Deployed on Vercel
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Running locally
+```bash
+git clone https://github.com/Bryan-Cabrera/stat-context.git
+cd stat-context
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Roadmap
+- [x] Project setup and deployment pipeline
+- [ ] Home screen with today's MLB games
+- [ ] Player profile with stat explanations
+- [ ] Team overview page
+- [ ] Stat glossary
