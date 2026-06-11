@@ -1,20 +1,17 @@
 function GameCard({ game }) {
   const { awayTeam, homeTeam, status, sport } = game
 
+  const isFinished = status === 'Final' || status === 'Game Over'
+  const isLive = status === 'Live'
+
   const getStatusDisplay = () => {
-    if (status === 'Final') {
-      return <span className="text-xs text-gray-400">Final</span>
-    }
-    if (status === 'Live') {
-      return <span className="text-xs text-green-400 font-semibold">● Live</span>
-    }
+    if (isFinished) return <span className="text-xs text-gray-400">Final</span>
+    if (isLive) return <span className="text-xs text-green-400 font-semibold animate-pulse">● Live</span>
     return <span className="text-xs text-gray-400">Scheduled</span>
   }
 
   const getScore = (team) => {
-    if (status === 'Final' || status === 'Live') {
-      return team.score ?? '-'
-    }
+    if (isFinished || isLive) return team.score ?? '-'
     return '-'
   }
 
@@ -37,14 +34,18 @@ function GameCard({ game }) {
             <span className="text-xs text-gray-500 w-8">{awayTeam.abbreviation}</span>
             <span className="text-sm font-medium">{awayTeam.name}</span>
           </div>
-          <span className="text-lg font-bold">{getScore(awayTeam)}</span>
+          <span className={`text-lg font-bold ${isFinished && awayTeam.score > homeTeam.score ? 'text-white' : 'text-gray-400'}`}>
+            {getScore(awayTeam)}
+          </span>
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <span className="text-xs text-gray-500 w-8">{homeTeam.abbreviation}</span>
             <span className="text-sm font-medium">{homeTeam.name}</span>
           </div>
-          <span className="text-lg font-bold">{getScore(homeTeam)}</span>
+          <span className={`text-lg font-bold ${isFinished && homeTeam.score > awayTeam.score ? 'text-white' : 'text-gray-400'}`}>
+            {getScore(homeTeam)}
+          </span>
         </div>
       </div>
       <div className="mt-3 pt-3 border-t border-gray-800">
