@@ -55,6 +55,22 @@ function Home() {
             ))}
           </div>
         )}
+
+        <div className="mt-12">
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-x1 font-bold">StatSpotlight</h2>
+            <span className="text-xs font-medium bg-blue-900 text=blue-300 px-3 py-1 rounded-full">
+              Coming Soon 
+            </span>
+          </div>
+          <div className="bg-gray-900 border border-gray-800 border-dashed rounded-x1 p-8 text-center">
+            <div className="text-3xl mb-3">🔦</div>
+            <p className="text-gray-400 text-sm max-w-sm mx-auto">
+              Eventually we'll show the most interesting stat story - an overperforming rookie, a historic streak, or a slump worth knowing about.
+            </p>
+          </div>
+        </div>
+        
       </main>
     </div>
   )
