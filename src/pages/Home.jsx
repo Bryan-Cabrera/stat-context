@@ -14,8 +14,6 @@ function Home() {
     try {
       const data = await getTodaysGames()
       setGames(data)
-      console.log('First game status:', data[0]?.status)
-      console.log('First game scores:', data[0]?.awayTeam, data[0]?.homeTeam)
       setLastUpdated(new Date())
       setError(null)
     } catch (err) {

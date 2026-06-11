@@ -3,11 +3,13 @@ function GameCard({ game }) {
 
   const isFinished = status === 'Final' || status === 'Game Over'
   const isLive = status === 'Live'
+  const isPreview = status === 'Preview'
 
   const getStatusDisplay = () => {
-    if (isFinished) return <span className="text-xs text-gray-400">Final</span>
-    if (isLive) return <span className="text-xs text-green-400 font-semibold animate-pulse">● Live</span>
-    return <span className="text-xs text-gray-400">Scheduled</span>
+  if (isFinished) return <span className="text-xs text-gray-400">Final</span>
+  if (isLive) return <span className="text-xs text-green-400 font-semibold animate-pulse">● Live</span>
+  if (isPreview) return <span className="text-xs text-gray-500">Upcoming</span>
+  return <span className="text-xs text-gray-500">Scheduled</span>
   }
 
   const getScore = (team) => {
