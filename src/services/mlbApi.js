@@ -1,3 +1,5 @@
+import { adaptMLBGame } from '../utils/gameAdapter'
+
 const BASE_URL = 'https://statsapi.mlb.com/api/v1'
 
 export async function getTodaysGames() {
@@ -9,5 +11,6 @@ export async function getTodaysGames() {
   const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
   const data = await response.json()
   const parsed = JSON.parse(data.contents)
-  return parsed.dates?.[0]?.games ?? []
+  const rawGames = parsed.dates?.[0]?.games ?? []
+  return rawGames.map(adaptMLBGame)
 }
