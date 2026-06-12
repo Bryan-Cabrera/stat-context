@@ -10,9 +10,5 @@ export async function getTodaysGames() {
   const data = await response.json()
   const rawGames = data.dates?.[0]?.games ?? []
 
-  console.log('Fetching date:', today)
-  console.log('Raw games count:', rawGames.length)
-  console.log('First game status:', rawGames[0]?.status?.abstractGameState)
-
   return rawGames.map(adaptMLBGame)
 }
