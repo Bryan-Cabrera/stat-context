@@ -12,3 +12,18 @@ export async function getTodaysGames() {
 
   return rawGames.map(adaptMLBGame)
 }
+
+export async function getPlayer(playerId) {
+  const response = await fetch(`/api/player?playerId=${playerId}`)
+  const data = await response.json()
+  return data
+}
+
+export async function searchPlayers(query, signal) {
+  const response = await fetch(
+    `/api/search?query=${encodeURIComponent(query)}`,
+    { signal }
+  )
+  const data = await response.json()
+  return data.people ?? []
+}
