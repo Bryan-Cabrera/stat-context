@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
-import SearchBar from '../components/SearchBar'
 import GameCard from '../components/GameCard'
 import { getTodaysGames } from '../services/mlbApi'
 
@@ -34,7 +33,6 @@ function Home() {
     <div className="min-h-screen bg-gray-950 text-white">
       <Navbar />
       <main className="max-w-5xl mx-auto px-6 py-8">
-        <SearchBar />
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold">Today's Games</h2>
           {lastUpdated && (
