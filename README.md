@@ -20,10 +20,3 @@ cd stat-context
 npm install
 npm run dev
 ```
-
-## Roadmap
-- [x] Project setup and deployment pipeline
-- [ ] Home screen with today's MLB games
-- [ ] Player profile with stat explanations
-- [ ] Team overview page
-- [ ] Stat glossary
