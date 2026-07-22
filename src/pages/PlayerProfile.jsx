@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { getPlayer } from '../services/mlbApi'
 import { STAT_CONFIG, getStatRating } from '../constants/statThresholds'
+import StatContextTake from '../components/StatContextTake'
 
 // MLB API returns IP as "185.1" where .1 = 1 out, not one-tenth of an inning.
 function convertIP(ip) {
@@ -121,6 +122,7 @@ function PlayerProfile() {
   return (
     <PageShell>
       <PlayerHeader player={player} />
+      <StatContextTake playerId={playerId} />
 
       {hittingCards.length > 0 && (
         <section className="mb-8">

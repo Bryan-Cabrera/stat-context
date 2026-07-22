@@ -4,11 +4,13 @@ import tailwindcss from '@tailwindcss/vite'
 import gamesHandler from './api/games.js'
 import playerHandler from './api/player.js'
 import searchHandler from './api/search.js'
+import statContextTakeHandler from './api/statContextTake.js'
 
 const API_HANDLERS = {
-  '/api/games':  gamesHandler,
-  '/api/player': playerHandler,
-  '/api/search': searchHandler,
+  '/api/games':           gamesHandler,
+  '/api/player':          playerHandler,
+  '/api/search':          searchHandler,
+  '/api/statContextTake': statContextTakeHandler,
 }
 
 // Runs the Vercel-style serverless handlers inside Vite's dev server.

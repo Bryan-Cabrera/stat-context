@@ -40,6 +40,12 @@ export async function getPlayer(playerId) {
   return data
 }
 
+export async function getStatContextTake(playerId) {
+  const response = await fetch(`/api/statContextTake?playerId=${playerId}`)
+  if (!response.ok) throw new Error('AI summary unavailable')
+  return response.json()
+}
+
 export async function searchPlayers(query, signal) {
   const response = await fetch(
     `/api/search?query=${encodeURIComponent(query)}`,
