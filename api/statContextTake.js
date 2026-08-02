@@ -2,6 +2,9 @@ import { getStatRating } from '../src/constants/statThresholds.js'
 import { MLB_LEAGUE_AVERAGES } from '../src/constants/leagueAverages.js'
 import { AI_SYSTEM_PROMPT } from '../src/constants/statContextVoice.js'
 
+// Google rotates Flash models periodically — update this single constant when they do.
+const GEMINI_MODEL = 'gemini-3.6-flash'
+
 // NOTE: In-memory rate limiting. Serverless functions may run across multiple
 // instances that don't share memory, so this limits per-instance rather than
 // globally. A production version would use Vercel KV (Redis-backed) for
@@ -153,7 +156,7 @@ export default async function handler(req, res) {
 
     console.log('[StatContextTake] Calling Gemini for playerId:', playerId)
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
