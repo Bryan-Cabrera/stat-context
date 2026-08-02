@@ -101,7 +101,8 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too many requests. Try again in a minute.' })
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY
+  const apiKey = process.env.GEMINI_API_KEY
+  console.log('[StatContextTake] GEMINI_API_KEY present:', !!apiKey)
   if (!apiKey) {
     return res.status(503).json({ error: 'AI summary unavailable' })
   }
@@ -150,28 +151,36 @@ export default async function handler(req, res) {
 
     const userMessage = buildUserMessage(playerInfo, hittingStatMap, pitchingStatMap, focus)
 
-    const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 300,
-        system: AI_SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: userMessage }],
-      }),
-    })
+    console.log('[StatContextTake] Calling Gemini for playerId:', playerId)
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: AI_SYSTEM_PROMPT }],
+          },
+          contents: [
+            { role: 'user', parts: [{ text: userMessage }] },
+          ],
+          generationConfig: {
+            maxOutputTokens: 300,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
+        }),
+      }
+    )
 
-    if (!anthropicRes.ok) {
-      console.error('[statContextTake] Anthropic error:', anthropicRes.status)
+    console.log('[StatContextTake] Gemini response status:', geminiRes.status)
+    if (!geminiRes.ok) {
+      const errorBody = await geminiRes.text()
+      console.error('[StatContextTake] Gemini error body:', errorBody)
       return res.status(502).json({ error: 'AI summary unavailable' })
     }
 
-    const anthropicData = await anthropicRes.json()
-    const summary = anthropicData.content?.[0]?.text ?? null
+    const geminiData = await geminiRes.json()
+    const summary = geminiData.candidates?.[0]?.content?.parts?.[0]?.text ?? null
 
     if (!summary) return res.status(502).json({ error: 'AI summary unavailable' })
 
@@ -179,7 +188,8 @@ export default async function handler(req, res) {
     res.status(200).json({ summary })
 
   } catch (err) {
-    console.error('[statContextTake] Unexpected error:', err)
+    console.error('[StatContextTake] Caught error:', err.message)
+    console.error('[StatContextTake] Stack:', err.stack)
     res.status(500).json({ error: 'Internal server error' })
   }
 }
