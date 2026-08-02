@@ -169,7 +169,8 @@ export default async function handler(req, res) {
           ],
           generationConfig: {
             maxOutputTokens: 300,
-            thinkingConfig: { thinkingBudget: 0 },
+            // Gemini 3.x reasoning overhead is controlled server-side per model.
+            // No client-side thinkingConfig supported — removed from 2.5 format.
           },
         }),
       }
