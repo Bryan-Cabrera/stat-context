@@ -105,7 +105,6 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.GEMINI_API_KEY
-  console.log('[StatContextTake] GEMINI_API_KEY present:', !!apiKey)
   if (!apiKey) {
     return res.status(503).json({ error: 'AI summary unavailable' })
   }
@@ -154,7 +153,6 @@ export default async function handler(req, res) {
 
     const userMessage = buildUserMessage(playerInfo, hittingStatMap, pitchingStatMap, focus)
 
-    console.log('[StatContextTake] Calling Gemini for playerId:', playerId)
     const geminiRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
       {
@@ -175,10 +173,7 @@ export default async function handler(req, res) {
       }
     )
 
-    console.log('[StatContextTake] Gemini response status:', geminiRes.status)
     if (!geminiRes.ok) {
-      const errorBody = await geminiRes.text()
-      console.error('[StatContextTake] Gemini error body:', errorBody)
       return res.status(502).json({ error: 'AI summary unavailable' })
     }
 
@@ -191,8 +186,6 @@ export default async function handler(req, res) {
     res.status(200).json({ summary })
 
   } catch (err) {
-    console.error('[StatContextTake] Caught error:', err.message)
-    console.error('[StatContextTake] Stack:', err.stack)
     res.status(500).json({ error: 'Internal server error' })
   }
 }
